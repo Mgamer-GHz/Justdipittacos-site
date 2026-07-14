@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catering — Just Dip It Tacos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Libre+Franklin:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blacktop:#1B1815;
+    --smoke:#2E2A26;
+    --consomme:#C1421A;
+    --consomme-dark:#9A3313;
+    --marigold:#E8A33D;
+    --masa:#F2E8D5;
+    --masa-dim:#E7DABF;
+    --cilantro:#4F6B45;
+    --ink:#1B1815;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--masa);
+    color:var(--ink);
+    font-family:'Libre Franklin', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .display{font-family:'Anton', sans-serif; text-transform:uppercase; letter-spacing:0.01em;}
+  .mono{font-family:'Space Mono', monospace;}
+  .serif{font-family:'Fraunces', serif;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--consomme);
+    font-weight:700;
+  }
+  .eyebrow.on-dark{color:var(--marigold);}
+
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,24,21,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(232,163,61,0.18);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+  }
+  .nav-logo{display:flex; align-items:center; gap:14px;}
+  .nav-logo-badge{
+    width:80px; height:80px; border-radius:50%;
+    background:var(--masa);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 16px rgba(0,0,0,0.4);
+    border:3px solid var(--marigold);
+    flex-shrink:0;
+  }
+  .nav-logo-badge img{height:68px; width:68px; border-radius:50%; object-fit:cover;}
+  .nav-logo span{font-family:'Anton'; color:var(--masa); font-size:1.05rem; letter-spacing:0.03em;}
+  .nav-links{display:flex; align-items:center; gap:30px;}
+  .nav-links a{
+    color:var(--masa-dim); font-size:0.86rem; font-weight:600;
+    letter-spacing:0.03em; text-transform:uppercase;
+    transition:color .2s ease;
+  }
+  .nav-links a:hover{color:var(--marigold);}
+  .nav-links a.current{color:var(--marigold);}
+  .btn-order{
+    background:var(--consomme); color:var(--masa)!important;
+    padding:10px 20px; border-radius:3px;
+    font-family:'Space Mono'; font-weight:700; font-size:0.78rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    border:1px solid var(--consomme);
+    transition:transform .15s ease, background .2s ease;
+  }
+  .btn-order:hover{background:var(--consomme-dark); transform:translateY(-1px);}
+  .nav-toggle{display:none; background:none; border:none; color:var(--masa); font-size:1.6rem; cursor:pointer;}
+
+  .page-hero{
+    background:var(--blacktop);
+    padding:70px 0 56px;
+    position:relative;
+  }
+  .page-hero h1{
+    color:var(--masa);
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:0.94; margin-top:14px;
+  }
+  .page-hero h1 em{
+    font-style:normal; color:var(--consomme);
+    -webkit-text-stroke:1.5px var(--marigold);
+  }
+  .page-hero p{
+    color:var(--masa-dim); font-family:'Fraunces'; font-size:1.1rem;
+    max-width:560px; margin-top:16px;
+  }
+
+  .drip{display:block; width:100%; height:56px; margin-top:-1px;}
+
+  .corp-banner{padding:36px 0 0; background:var(--masa);}
+  .corp-banner-inner{
+    background:var(--smoke); border-radius:4px;
+    padding:26px 30px;
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:18px;
+  }
+  .corp-banner-inner p{color:var(--masa-dim); font-family:'Fraunces'; font-size:1rem;}
+  .corp-banner-inner p strong{color:var(--masa); font-family:'Libre Franklin'; font-weight:700;}
+  .corp-banner-link{
+    font-family:'Space Mono'; font-weight:700; font-size:0.78rem;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--marigold);
+    border-bottom:1px solid var(--marigold); padding-bottom:2px; white-space:nowrap;
+  }
+
+  .cmenu{padding:70px 0 40px; background:var(--masa);}
+  .cmenu-head{max-width:600px; margin-bottom:48px;}
+  .cmenu-head h2{font-size:clamp(2rem,3.6vw,2.8rem); margin-top:10px;}
+  .ticket-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:30px;}
+  .ticket{
+    background:var(--smoke); border-radius:2px;
+    position:relative; overflow:hidden;
+    box-shadow:0 8px 0 rgba(0,0,0,0.2);
+  }
+  .ticket-body{padding:24px 22px 26px; position:relative;}
+  .ticket-stub{
+    position:absolute; top:-14px; right:20px;
+    background:var(--consomme); color:var(--masa);
+    font-family:'Space Mono'; font-weight:700; font-size:0.78rem;
+    padding:6px 12px; border-radius:2px; letter-spacing:0.04em;
+    box-shadow:0 4px 0 rgba(0,0,0,0.2);
+  }
+  .ticket-num{
+    font-family:'Space Mono'; font-size:0.72rem; color:var(--consomme);
+    letter-spacing:0.1em; font-weight:700;
+  }
+  .ticket-body h3{color:var(--masa); font-size:1.4rem; margin:6px 0 8px; line-height:1.05;}
+  .ticket-body p{font-family:'Fraunces'; font-size:0.96rem; color:var(--masa-dim);}
+  .ticket-dash{border:none; border-top:2px dashed rgba(232,163,61,0.2); margin:16px 0 0;}
+  .ticket-price{
+    font-size:0.72rem; color:var(--marigold);
+    margin-top:12px; letter-spacing:0.01em; line-height:1.5;
+  }
+  .ticket-price a{color:var(--marigold); font-weight:700; border-bottom:1px solid var(--marigold);}
+
+  .menu-note{font-family:'Fraunces'; font-size:0.98rem; color:#3a342c; max-width:640px; margin-top:36px; line-height:1.6;}
+
+  .menu-list-section{margin-top:64px;}
+  .menu-cat{margin-bottom:44px;}
+  .menu-cat h3{font-size:1.25rem; margin-bottom:18px; font-family:'Anton'; text-transform:uppercase; letter-spacing:0.02em;}
+  .menu-list-grid{display:grid; grid-template-columns:1fr 1fr; gap:4px 40px;}
+  .menu-list-item{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    padding:12px 0; border-bottom:1px dashed rgba(27,24,21,0.18);
+  }
+  .menu-list-item .mli-name{font-weight:700; font-size:0.98rem;}
+  .menu-list-item .mli-desc{font-family:'Fraunces'; font-size:0.85rem; color:#5c5648; display:block; margin-top:3px; line-height:1.4;}
+  .menu-list-item .mli-price{font-family:'Space Mono'; font-size:0.76rem; color:var(--consomme-dark); white-space:nowrap; text-align:right; flex-shrink:0;}
+
+  .outdoor{background:var(--smoke); padding:90px 0;}
+  .outdoor-head{max-width:600px; margin-bottom:40px;}
+  .outdoor-head h2{color:var(--masa); font-size:clamp(2rem,3.6vw,2.8rem); margin-top:10px;}
+  .outdoor-head p{color:var(--masa-dim); font-family:'Fraunces'; font-size:1.02rem; margin-top:14px; max-width:560px; line-height:1.6;}
+  .outdoor-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-bottom:36px;}
+  .outdoor-photo{position:relative; border-radius:4px; overflow:hidden; box-shadow:10px 10px 0 var(--consomme);}
+  .outdoor-photo img, .outdoor-photo video{width:100%; height:300px; object-fit:cover; display:block;}
+  .outdoor-photo .stub{
+    position:absolute; top:16px; left:16px;
+    background:var(--consomme); color:var(--masa);
+    font-family:'Space Mono'; font-weight:700; font-size:0.72rem;
+    padding:6px 12px; border-radius:2px; letter-spacing:0.04em; text-transform:uppercase;
+  }
+  .outdoor-stats{display:flex; gap:20px; flex-wrap:wrap; margin-bottom:36px;}
+  .outdoor-stat{background:var(--blacktop); border-radius:4px; padding:20px 26px; flex:1; min-width:160px;}
+  .outdoor-stat .stat-num{font-family:'Anton'; color:var(--marigold); font-size:1.8rem; letter-spacing:0.01em;}
+  .outdoor-stat .stat-label{font-family:'Space Mono'; color:var(--masa-dim); font-size:0.72rem; letter-spacing:0.05em; text-transform:uppercase; margin-top:4px;}
+
+  .howto{background:var(--blacktop); padding:90px 0;}
+  .howto-head{max-width:600px; margin-bottom:48px;}
+  .howto-head h2{color:var(--masa); font-size:clamp(2rem,3.6vw,2.8rem); margin-top:10px;}
+  .howto-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-bottom:48px;}
+  .howto-card{background:var(--smoke); border-radius:4px; padding:26px 22px 28px;}
+  .howto-card .num{font-family:'Space Mono'; color:var(--consomme); font-weight:700; font-size:0.78rem;}
+  .howto-card h3{color:var(--masa); font-size:1.1rem; margin:10px 0 10px;}
+  .howto-card p{color:var(--masa-dim); font-family:'Fraunces'; font-size:0.94rem; line-height:1.55;}
+  .howto-contact{
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:20px;
+    border-top:1px solid rgba(232,163,61,0.2); padding-top:32px;
+  }
+  .howto-contact-links{display:flex; gap:22px; flex-wrap:wrap;}
+  .contact-link{
+    display:flex; align-items:center; gap:9px;
+    color:var(--marigold); font-family:'Space Mono'; font-weight:700; font-size:0.82rem;
+  }
+  .contact-link svg{width:16px; height:16px; fill:var(--marigold); flex-shrink:0;}
+  .btn-primary{
+    background:var(--marigold); color:var(--blacktop);
+    padding:15px 30px; border-radius:3px;
+    font-family:'Space Mono'; font-weight:700; font-size:0.82rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    display:inline-block; transition:transform .15s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+
+  footer{background:var(--blacktop); padding:60px 0 34px; border-top:1px solid rgba(232,163,61,0.15);}
+  .footer-grid{
+    display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; gap:40px;
+    padding-bottom:40px; border-bottom:1px solid rgba(232,163,61,0.12);
+  }
+  .footer-brand{display:flex; align-items:center; gap:12px;}
+  .footer-brand img{height:44px; width:44px; border-radius:50%; border:2px solid var(--marigold);}
+  .footer-brand span{font-family:'Anton'; color:var(--masa); font-size:1.1rem;}
+  .footer-col h4{
+    font-family:'Space Mono'; color:var(--marigold); font-size:0.72rem;
+    letter-spacing:0.12em; text-transform:uppercase; margin-bottom:14px;
+  }
+  .footer-col a, .footer-col p{
+    display:block; color:var(--masa-dim); font-size:0.92rem; margin-bottom:9px;
+  }
+  .footer-col a:hover{color:var(--marigold);}
+  .footer-bottom{
+    padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-family:'Space Mono'; font-size:0.72rem; color:#7d766a; letter-spacing:0.04em;
+  }
+
+  .order-form{background:var(--smoke); padding:90px 0 100px;}
+  .order-form-head{max-width:600px; margin-bottom:44px;}
+  .order-form-head h2{color:var(--masa); font-size:clamp(2rem,3.6vw,2.8rem); margin-top:10px;}
+  .order-form-head p{color:var(--masa-dim); font-family:'Fraunces'; font-size:1.02rem; margin-top:14px; max-width:540px; line-height:1.6;}
+  .of-card{background:var(--blacktop); border-radius:4px; padding:40px 36px;}
+  .of-row{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;}
+  .of-field{display:flex; flex-direction:column; gap:8px;}
+  .of-field label{
+    font-family:'Space Mono'; font-size:0.72rem; color:var(--marigold);
+    letter-spacing:0.05em; text-transform:uppercase;
+  }
+  .of-field label .req{color:var(--consomme); margin-left:4px;}
+  .of-field input, .of-field select, .of-field textarea{
+    background:var(--smoke); border:1px solid rgba(232,163,61,0.25);
+    border-radius:3px; padding:12px 14px; color:var(--masa);
+    font-family:'Libre Franklin'; font-size:0.95rem;
+  }
+  .of-field input::placeholder, .of-field textarea::placeholder{color:#6b6459;}
+  .of-field select{appearance:none; cursor:pointer;}
+  .of-field textarea{resize:vertical; min-height:110px; font-family:'Libre Franklin';}
+  .of-field input:focus, .of-field select:focus, .of-field textarea:focus{
+    outline:none; border-color:var(--marigold);
+  }
+  .of-submit{
+    margin-top:8px;
+    background:var(--marigold); color:var(--blacktop); border:none;
+    padding:15px 34px; border-radius:3px; cursor:pointer;
+    font-family:'Space Mono'; font-weight:700; font-size:0.82rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+  }
+  .of-note{
+    font-family:'Space Mono'; font-size:0.72rem; color:#8a8071;
+    margin-top:16px; letter-spacing:0.02em;
+  }
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+    .ticket-grid{grid-template-columns:1fr;}
+    .menu-list-grid{grid-template-columns:1fr;}
+    .outdoor-grid{grid-template-columns:1fr;}
+    .howto-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr; row-gap:30px;}
+    .of-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="nav-logo">
+      <a href="index.html" style="display:flex; align-items:center; gap:14px;">
+        <div class="nav-logo-badge">
+          <img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/5b6eb425-534a-4455-b1d2-bcae7d8407b4/Just+Dip+It+Logo.png?format=1500w" alt="Just Dip It Tacos logo">
+        </div>
+        <span>Just Dip It</span>
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html#menu">Our Menus</a>
+      <a href="about.html">About</a>
+      <a href="catering.html" class="current">Catering</a>
+      <a href="index.html#schedule">Pop-Up Locations</a>
+      <a href="contact.html">Contact</a>
+      <a href="#order-form" class="btn-order">Order Here</a>
+    </nav>
+    <button class="nav-toggle">&#9776;</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow on-dark">Catering</p>
+    <h1 class="display">Tacos For <em>Every</em> Table</h1>
+    <p>Weddings, birthdays, graduations, block parties &mdash; whatever you're planning, we'll help you build a menu your guests will talk about after.</p>
+  </div>
+</section>
+
+<svg class="drip" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,0 L1200,0 L1200,20 C1150,20 1140,55 1100,55 C1060,55 1055,15 1010,15 C965,15 958,50 915,50 C872,50 868,10 822,10 C776,10 770,45 725,45 C680,45 675,18 630,18 C585,18 580,42 535,42 C490,42 486,12 440,12 C394,12 390,48 344,48 C298,48 295,22 249,22 C203,22 200,38 154,38 C108,38 105,16 60,16 C30,16 15,20 0,20 Z" fill="#1B1815"/>
+</svg>
+
+<section class="corp-banner">
+  <div class="wrap">
+    <div class="corp-banner-inner">
+      <p><strong>Planning something for the office?</strong> See pricing and details built for corporate lunches and team events.</p>
+      <a href="just-dip-it-catering.html" class="corp-banner-link">Corporate Catering &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="cmenu" id="catering-menu">
+  <div class="wrap">
+    <div class="cmenu-head">
+      <p class="eyebrow">Catering Menu</p>
+      <h2>What We Serve</h2>
+    </div>
+    <div class="ticket-grid">
+      <div class="ticket">
+        <div class="ticket-photo"><img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/3a8b6c30-cb83-4f1d-8264-950eb60820c8/JustDipIt_BeefQuesabirria_KMendiola-58.jpg" alt="QuesaBirria Tacos" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+        <div class="ticket-body">
+          <h3>QuesaBirria Tacos</h3>
+          <p>Your choice of braised beef, marinated chicken, or oyster mushroom.</p>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-photo"><img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/94074f87-582d-4cc1-ba4f-a43db361ddb2/JustDipIt_LoadedQuesabirriaNachos_KMendiola-45.jpg" alt="Loaded QuesaBirria Nachos" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+        <div class="ticket-body">
+          <h3>Loaded QuesaBirria Nachos</h3>
+          <p>Toasted corn tortilla chips topped with your choice of quesabirria, cheese, onions, cilantro &amp; jalapeño.</p>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-photo"><img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/b80577f0-b537-4e5f-ac24-0482ad134d98/JustDipIt_QuesabirriaChilaquiles_KMendiola-34.jpg" alt="QuesaBirria Chilaquiles" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+        <div class="ticket-body">
+          <h3>QuesaBirria Chilaquiles</h3>
+          <p>Toasted corn tortilla chips with your choice of protein.</p>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-photo"><img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/b8dcfa48-4644-4c05-8e2b-c095cce2a7ca/JustDipIt_GreenSpaghettiwithChicken_KMendiola-12.jpg" alt="Green Spaghetti" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+        <div class="ticket-body">
+          <h3>Green Spaghetti</h3>
+          <p>Green spaghetti with your choice of protein.</p>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-photo"><img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/7dba89a6-5b3e-4b68-bd18-b35039ecfd0e/JustDipIt_Guacamole_KMendiola-19.jpg" alt="Guac + Chips" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+        <div class="ticket-body">
+          <h3>Guac + Chips</h3>
+          <p>Fresh guacamole made to order, served with chips.</p>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-photo"><img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/203a793c-8ce8-4aad-b2ef-8831bf480cdd/JustDipIt_ShrimpTacos_KMendiola-29.jpg" alt="Mini Shrimp Tacos" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+        <div class="ticket-body">
+          <h3>Mini Shrimp Tacos</h3>
+          <p>Bite-size shrimp tacos, great for passed apps.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-list-section">
+      <div class="menu-cat">
+        <h3>Small Bites</h3>
+        <div class="menu-list-grid">
+          <div class="menu-list-item">
+            <div><span class="mli-name">Queso Fundido Bites</span><span class="mli-desc">Beef or pork</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat">
+        <h3>Catering Trays &mdash; Sides</h3>
+        <div class="menu-list-grid">
+          <div class="menu-list-item">
+            <div><span class="mli-name">Shrimp N Guac</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Mini Taco Bites</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Spanish Rice</span></div>
+            <span class="mli-price">Half $60 / Full $115</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Beans</span><span class="mli-desc">Pork, beef, or meatless</span></div>
+            <span class="mli-price">Half $75 / Full $105</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Guac + Chips</span></div>
+            <span class="mli-price">Half $55 / Full $85</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat">
+        <h3>Catering Trays &mdash; Mains</h3>
+        <div class="menu-list-grid">
+          <div class="menu-list-item">
+            <div><span class="mli-name">Loaded QuesaBirria Nachos</span><span class="mli-desc">Toasted corn tortilla chips, cheese, onions, cilantro &amp; jalapeño</span></div>
+            <span class="mli-price">Half $75 / Full $150</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Seasonal Salad</span><span class="mli-desc">With or without fruit</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Puerto Rican Rice</span></div>
+            <span class="mli-price">Half $75 / Full $150</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Mini Jibaritos</span><span class="mli-desc">Beef, steak, chicken, or mushroom</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">QuesaBirria Chilaquiles</span><span class="mli-desc">Toasted corn tortilla chips with your choice of protein</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Loaded Mini Flautas</span><span class="mli-desc">Rolled corn tortillas</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Fajitas Platter</span><span class="mli-desc">Your choice of protein with peppers and onions, corn tortillas &amp; fixings</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Green Spaghetti</span><span class="mli-desc">With your choice of protein</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+          <div class="menu-list-item">
+            <div><span class="mli-name">Loaded Elote On The Cob</span><span class="mli-desc">Mayo, butter, cheese &amp; Tajín</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-cat">
+        <h3>On-Site</h3>
+        <div class="menu-list-grid">
+          <div class="menu-list-item">
+            <div><span class="mli-name">Mini Shrimp Tacos</span><span class="mli-desc">Built to order, your choice of toppings</span></div>
+            <span class="mli-price">Pricing by request</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="menu-note">Also available: individual box lunches for grab-and-go groups, and our full outdoor taquero setup for parties of 30 or more. Vegan and vegetarian options available on every item, made with oyster mushroom in place of meat.</p>
+  </div>
+</section>
+
+<section class="outdoor" id="outdoor-taquero">
+  <div class="wrap">
+    <div class="outdoor-head">
+      <p class="eyebrow on-dark">Outdoor Taquero Service</p>
+      <h2 class="display">Grill-Side, Taquero-Style</h2>
+      <p>Same tent, same blacktop grill, right in front of your guests &mdash; tacos dipped and griddled to order at your backyard party, block party, or outdoor gathering.</p>
+    </div>
+    <div class="outdoor-grid">
+      <div class="outdoor-photo">
+        <span class="stub mono">On The Line</span>
+        <img src="IMG_20241125_235017_563.webp" alt="Just Dip It taquero plating birria tacos to order at an outdoor event">
+      </div>
+      <div class="outdoor-photo">
+        <span class="stub mono">Behind The Scenes</span>
+        <video src="PXL_20250927_220640707.mp4" controls playsinline aria-label="Video of outdoor taquero service in action"></video>
+      </div>
+    </div>
+    <div class="outdoor-stats">
+      <div class="outdoor-stat">
+        <p class="stat-num">$250</p>
+        <p class="stat-label">Service Fee</p>
+      </div>
+      <div class="outdoor-stat">
+        <p class="stat-num">~$16</p>
+        <p class="stat-label">Avg Per Person</p>
+      </div>
+      <div class="outdoor-stat">
+        <p class="stat-num">30</p>
+        <p class="stat-label">Minimum Guests</p>
+      </div>
+    </div>
+    <p class="menu-note" style="color:var(--masa-dim); margin-top:0;">Best for backyard parties, block parties, and outdoor gatherings of 30 or more &mdash; ask us below to book.</p>
+  </div>
+</section>
+
+<section class="howto" id="how-to-order">
+  <div class="wrap">
+    <div class="howto-head">
+      <p class="eyebrow on-dark">How To Order</p>
+      <h2 class="display">Book Your Event</h2>
+    </div>
+    <div class="howto-grid">
+      <div class="howto-card">
+        <p class="num mono">01</p>
+        <h3>Tell Us The Details</h3>
+        <p>Date, headcount, and what kind of event it is &mdash; email or call and we'll get back to you quickly.</p>
+      </div>
+      <div class="howto-card">
+        <p class="num mono">02</p>
+        <h3>We Build Your Menu</h3>
+        <p>We'll help you pick the right mix of tacos, nachos, and flautas for your group and budget.</p>
+      </div>
+      <div class="howto-card">
+        <p class="num mono">03</p>
+        <h3>We Show Up And Serve</h3>
+        <p>Drop-off, fully hosted with staff, or the full outdoor taquero setup &mdash; whatever fits your event.</p>
+      </div>
+    </div>
+    <div class="howto-contact">
+      <div class="howto-contact-links">
+        <a class="contact-link" href="mailto:jelchefe@gmail.com">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></svg>
+          jelchefe@gmail.com
+        </a>
+        <a class="contact-link" href="tel:+17737445040">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .8-.3 1.1l-2.2 2z"/></svg>
+          (773) 744-5040
+        </a>
+      </div>
+      <a href="contact.html" class="btn-primary">Full Contact Page</a>
+    </div>
+  </div>
+</section>
+
+<section class="order-form" id="order-form">
+  <div class="wrap">
+    <div class="order-form-head">
+      <p class="eyebrow on-dark">Request A Quote</p>
+      <h2 class="display">Book Your Event</h2>
+      <p>Fill this out with as much detail as you can and we'll be in touch soon.</p>
+    </div>
+    <form class="of-card" onsubmit="return false;">
+      <div class="of-row">
+        <div class="of-field">
+          <label>First Name<span class="req">*</span></label>
+          <input type="text" name="first_name" required>
+        </div>
+        <div class="of-field">
+          <label>Last Name<span class="req">*</span></label>
+          <input type="text" name="last_name" required>
+        </div>
+      </div>
+      <div class="of-row">
+        <div class="of-field">
+          <label>Email<span class="req">*</span></label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="of-field">
+          <label>Date<span class="req">*</span></label>
+          <input type="date" name="event_date" required>
+        </div>
+      </div>
+      <div class="of-row">
+        <div class="of-field">
+          <label>How many people will be at your event?<span class="req">*</span></label>
+          <input type="text" name="guest_count" required>
+        </div>
+        <div class="of-field">
+          <label>What service are you interested in?<span class="req">*</span></label>
+          <select name="service" required>
+            <option value="" selected disabled>Select an option</option>
+            <option value="On-Site Catering">On-Site Catering</option>
+            <option value="Catering Trays">Catering Trays</option>
+            <option value="Corporate Catering">Corporate Catering</option>
+            <option value="Outdoor Taquero Service">Outdoor Taquero Service</option>
+            <option value="Box Lunches">Box Lunches</option>
+            <option value="Personal Chef">Personal Chef</option>
+          </select>
+        </div>
+      </div>
+      <div class="of-field" style="margin-bottom:24px;">
+        <label>Message<span class="req">*</span></label>
+        <textarea name="message" required></textarea>
+      </div>
+      <button type="submit" class="of-submit">Send</button>
+      <p class="of-note">This form is a mockup only and not yet connected &mdash; convert to a Squarespace Form Block before publishing.</p>
+    </form>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/5b6eb425-534a-4455-b1d2-bcae7d8407b4/Just+Dip+It+Logo.png?format=1500w" alt="Just Dip It logo">
+        <span>Just Dip It</span>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="index.html#menu">Our Menus</a>
+        <a href="about.html">About</a>
+        <a href="just-dip-it-catering.html">Corporate Catering</a>
+      </div>
+      <div class="footer-col">
+        <h4>Find Us</h4>
+        <p>330 E 51st St Box 7 (front yellow box), Chicago, IL 60615</p>
+        <p>Wed &amp; Sat, 1&ndash;5pm</p>
+        <a href="index.html#schedule">Full schedule &amp; closures &rarr;</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <a href="https://www.instagram.com/justdipittacos/">Instagram</a>
+        <a href="https://www.facebook.com/JustDipitTacos">Facebook</a>
+        <a href="https://www.youtube.com/@JustDipitTacos">YouTube</a>
+        <a href="https://www.tiktok.com/@justdipittacos">TikTok</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Just Dip It Tacos</span>
+      <span>Chicago, IL</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

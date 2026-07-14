@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Just Dip It Tacos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Libre+Franklin:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blacktop:#1B1815;
+    --smoke:#2E2A26;
+    --consomme:#C1421A;
+    --consomme-dark:#9A3313;
+    --marigold:#E8A33D;
+    --masa:#F2E8D5;
+    --masa-dim:#E7DABF;
+    --cilantro:#4F6B45;
+    --ink:#1B1815;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--masa);
+    color:var(--ink);
+    font-family:'Libre Franklin', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .display{font-family:'Anton', sans-serif; text-transform:uppercase; letter-spacing:0.01em;}
+  .mono{font-family:'Space Mono', monospace;}
+  .serif{font-family:'Fraunces', serif;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--consomme);
+    font-weight:700;
+  }
+  .eyebrow.on-dark{color:var(--marigold);}
+
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,24,21,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(232,163,61,0.18);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+  }
+  .nav-logo{display:flex; align-items:center; gap:14px;}
+  .nav-logo-badge{
+    width:80px; height:80px; border-radius:50%;
+    background:var(--masa);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 16px rgba(0,0,0,0.4);
+    border:3px solid var(--marigold);
+    flex-shrink:0;
+  }
+  .nav-logo-badge img{height:68px; width:68px; border-radius:50%; object-fit:cover;}
+  .nav-logo span{font-family:'Anton'; color:var(--masa); font-size:1.05rem; letter-spacing:0.03em;}
+  .nav-links{display:flex; align-items:center; gap:30px;}
+  .nav-links a{
+    color:var(--masa-dim); font-size:0.86rem; font-weight:600;
+    letter-spacing:0.03em; text-transform:uppercase;
+    transition:color .2s ease;
+  }
+  .nav-links a:hover{color:var(--marigold);}
+  .nav-links a.current{color:var(--marigold);}
+  .btn-order{
+    background:var(--consomme); color:var(--masa)!important;
+    padding:10px 20px; border-radius:3px;
+    font-family:'Space Mono'; font-weight:700; font-size:0.78rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    border:1px solid var(--consomme);
+    transition:transform .15s ease, background .2s ease;
+  }
+  .btn-order:hover{background:var(--consomme-dark); transform:translateY(-1px);}
+  .nav-toggle{display:none; background:none; border:none; color:var(--masa); font-size:1.6rem; cursor:pointer;}
+
+  .page-hero{
+    background:var(--blacktop);
+    padding:70px 0 56px;
+    position:relative;
+  }
+  .page-hero h1{
+    color:var(--masa);
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:0.94; margin-top:14px;
+  }
+  .page-hero h1 em{
+    font-style:normal; color:var(--consomme);
+    -webkit-text-stroke:1.5px var(--marigold);
+  }
+  .page-hero p{
+    color:var(--masa-dim); font-family:'Fraunces'; font-size:1.1rem;
+    max-width:540px; margin-top:16px;
+  }
+
+  .drip{display:block; width:100%; height:56px; margin-top:-1px;}
+
+  .story{padding:90px 0 40px; background:var(--masa);}
+  .story-grid{
+    display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:start;
+  }
+  .story-photo img{
+    border-radius:4px; filter:sepia(0.12) saturate(1.05);
+    box-shadow:14px 14px 0 var(--consomme);
+  }
+  .story-photo-cap{
+    font-family:'Space Mono'; font-size:0.72rem; color:#8a8071;
+    margin-top:14px; letter-spacing:0.03em;
+  }
+  .story h2{
+    font-size:clamp(2rem, 3.6vw, 2.8rem); line-height:1.04;
+    margin:10px 0 22px;
+  }
+  .story p{
+    font-family:'Fraunces'; font-size:1.12rem; line-height:1.7;
+    color:#3a342c; max-width:560px;
+  }
+  .story p + p{margin-top:18px;}
+  .pull-quote{
+    font-family:'Fraunces'; font-style:italic; font-size:1.5rem;
+    color:var(--consomme-dark); line-height:1.35; max-width:560px;
+    margin:26px 0; padding-left:20px; border-left:3px solid var(--consomme);
+  }
+
+  .gallery{padding:20px 0 90px; background:var(--masa);}
+  .gallery-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:22px;}
+  .gallery-grid img{border-radius:3px; height:100%; object-fit:cover; width:100%;}
+  .gallery-grid .g-tall{height:440px;}
+  .gallery-grid .g-short{height:210px; margin-bottom:22px;}
+
+  .values{background:var(--blacktop); padding:90px 0;}
+  .values-head{max-width:600px; margin-bottom:48px;}
+  .values-head h2{color:var(--masa); font-size:clamp(2rem,3.6vw,2.8rem); margin-top:10px;}
+  .values-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
+  .value-card{background:var(--smoke); border-radius:4px; padding:26px 22px 28px;}
+  .value-card .num{font-family:'Space Mono'; color:var(--consomme); font-weight:700; font-size:0.78rem;}
+  .value-card h3{color:var(--masa); font-size:1.15rem; margin:10px 0 10px; line-height:1.15;}
+  .value-card p{color:var(--masa-dim); font-family:'Fraunces'; font-size:0.94rem; line-height:1.55;}
+
+  .timeline{padding:90px 0; background:var(--masa);}
+  .timeline-head{margin-bottom:48px;}
+  .timeline-head h2{font-size:clamp(2rem,3.6vw,2.8rem); margin-top:10px;}
+  .t-row{
+    display:grid; grid-template-columns:120px 1fr; gap:24px;
+    padding:26px 0; border-top:2px dashed rgba(27,24,21,0.18);
+  }
+  .t-row:last-child{border-bottom:2px dashed rgba(27,24,21,0.18);}
+  .t-year{font-family:'Anton'; font-size:1.5rem; color:var(--consomme);}
+  .t-body h3{font-size:1.15rem; margin-bottom:6px;}
+  .t-body p{font-family:'Fraunces'; color:#3a342c; font-size:1rem; max-width:600px; line-height:1.6;}
+
+  .cta-strip{background:var(--consomme); padding:64px 0; text-align:center;}
+  .cta-strip h2{color:var(--masa); font-size:clamp(1.9rem,4vw,2.8rem); margin-bottom:22px;}
+  .cta-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--marigold); color:var(--blacktop);
+    padding:15px 30px; border-radius:3px;
+    font-family:'Space Mono'; font-weight:700; font-size:0.82rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    transition:transform .15s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid var(--masa); color:var(--masa);
+    padding:15px 30px; border-radius:3px;
+    font-family:'Space Mono'; font-weight:700; font-size:0.82rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+  }
+
+  footer{background:var(--blacktop); padding:60px 0 34px; border-top:1px solid rgba(232,163,61,0.15);}
+  .footer-grid{
+    display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; gap:40px;
+    padding-bottom:40px; border-bottom:1px solid rgba(232,163,61,0.12);
+  }
+  .footer-brand{display:flex; align-items:center; gap:12px;}
+  .footer-brand img{height:44px; width:44px; border-radius:50%; border:2px solid var(--marigold);}
+  .footer-brand span{font-family:'Anton'; color:var(--masa); font-size:1.1rem;}
+  .footer-col h4{
+    font-family:'Space Mono'; color:var(--marigold); font-size:0.72rem;
+    letter-spacing:0.12em; text-transform:uppercase; margin-bottom:14px;
+  }
+  .footer-col a, .footer-col p{
+    display:block; color:var(--masa-dim); font-size:0.92rem; margin-bottom:9px;
+  }
+  .footer-col a:hover{color:var(--marigold);}
+  .footer-bottom{
+    padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-family:'Space Mono'; font-size:0.72rem; color:#7d766a; letter-spacing:0.04em;
+  }
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+    .story-grid{grid-template-columns:1fr; gap:36px;}
+    .story-photo img{box-shadow:8px 8px 0 var(--consomme);}
+    .gallery-grid{grid-template-columns:1fr;}
+    .gallery-grid .g-tall{height:280px;}
+    .values-grid{grid-template-columns:1fr 1fr;}
+    .t-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr; row-gap:30px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="nav-logo">
+      <a href="index.html" style="display:flex; align-items:center; gap:14px;">
+        <div class="nav-logo-badge">
+          <img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/5b6eb425-534a-4455-b1d2-bcae7d8407b4/Just+Dip+It+Logo.png?format=1500w" alt="Just Dip It Tacos logo">
+        </div>
+        <span>Just Dip It</span>
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html#menu">Our Menus</a>
+      <a href="about.html" class="current">About</a>
+      <a href="catering.html">Catering</a>
+      <a href="index.html#schedule">Pop-Up Locations</a>
+      <a href="contact.html">Contact</a>
+      <a href="catering.html#order-form" class="btn-order">Order Here</a>
+    </nav>
+    <button class="nav-toggle">&#9776;</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow on-dark">Chicago &middot; Est. 2019 &middot; Woman-Owned</p>
+    <h1 class="display">The Story Behind <em>Every</em> Dip</h1>
+    <p>It started with a grandmother who got up before the sun to cook for everyone she loved. It still starts there.</p>
+  </div>
+</section>
+
+<svg class="drip" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,0 L1200,0 L1200,20 C1150,20 1140,55 1100,55 C1060,55 1055,15 1010,15 C965,15 958,50 915,50 C872,50 868,10 822,10 C776,10 770,45 725,45 C680,45 675,18 630,18 C585,18 580,42 535,42 C490,42 486,12 440,12 C394,12 390,48 344,48 C298,48 295,22 249,22 C203,22 200,38 154,38 C108,38 105,16 60,16 C30,16 15,20 0,20 Z" fill="#1B1815"/>
+</svg>
+
+<section class="story" id="story">
+  <div class="wrap story-grid">
+    <div>
+      <div class="story-photo">
+        <img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/cfb2b396-ce0e-4bc5-8b56-9925c3e8d701/Jessica+House.jpg" alt="Jessica House, founder of Just Dip It Tacos">
+      </div>
+      <p class="story-photo-cap mono">Jessica House &mdash; Founder, Just Dip It Tacos</p>
+    </div>
+    <div>
+      <p class="eyebrow">Who We Are</p>
+      <h2>Traditional flavors,<br>a Chicago twist.</h2>
+      <p>Just Dip It Tacos was founded and is operated by Jessica House. It began in 2019 with a simple goal: bring the rich culinary traditions of her culture into the heart of Chicago.</p>
+      <p>Jessica's cooking is rooted in her grandparents' home, where food was the glue that held family and friends together. Her grandmother would wake up at 4 a.m. to start cooking for everyone — and watching that taught Jessica just how much good food can do for people.</p>
+      <div class="pull-quote">"Inspired by her grandmother, who would wake up at 4 a.m. to prepare meals for everyone, Jessica learned the profound impact that food can have on people's lives."</div>
+      <p>That's where Just Dip It Tacos comes from — a commitment to good food and memorable experiences for the community, one dipped and griddled taco at a time.</p>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap gallery-grid">
+    <img class="g-tall" src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/e4ea75ce-e701-4c02-8155-9e7c20a9dc6c/JustDipIt_Group_KMendiola-17.jpg" alt="Just Dip It Tacos team at a pop-up event">
+    <div>
+      <img class="g-short" src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/255ad631-0f33-4ce6-bd92-bf4e2ff09674/JustDipIt_Jessica_KMendiola-63.jpg" alt="Jessica House cooking at Just Dip It Tacos">
+      <img class="g-short" src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/1ee85a71-3fbb-4f20-a481-2fbede796b39/435379143_432362116136461_5489549767232344752_n.jpg" alt="Just Dip It Tacos personal chef service">
+    </div>
+  </div>
+</section>
+
+<section class="values" id="values">
+  <div class="wrap">
+    <div class="values-head">
+      <p class="eyebrow on-dark">What We Stand For</p>
+      <h2 class="display">Built On The Blacktop</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <p class="num mono">01</p>
+        <h3>Taquero-Style</h3>
+        <p>Everything comes off a 10x10 ft tent with a blacktop grill — birria dipped, griddled to order, served with consommé for dunking.</p>
+      </div>
+      <div class="value-card">
+        <p class="num mono">02</p>
+        <h3>Locally Sourced</h3>
+        <p>Ingredients sourced locally, for the freshest and most natural flavor in every bite.</p>
+      </div>
+      <div class="value-card">
+        <p class="num mono">03</p>
+        <h3>Room At The Table</h3>
+        <p>Vegan and vegetarian options — including oyster mushroom as a protein — so more people can dig in.</p>
+      </div>
+      <div class="value-card">
+        <p class="num mono">04</p>
+        <h3>Woman-Owned, Community-Rooted</h3>
+        <p>A proud minority-owned business, partnering with local dispensaries, car dealerships, breweries, and Chicagoland farmers markets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="timeline" id="timeline">
+  <div class="wrap">
+    <div class="timeline-head">
+      <p class="eyebrow">Along The Way</p>
+      <h2>From family kitchen to Chicago's blacktop.</h2>
+    </div>
+    <div class="t-row">
+      <p class="t-year mono">2019</p>
+      <div class="t-body">
+        <h3>Just Dip It Tacos is born</h3>
+        <p>Jessica House starts serving QuesaBirria Tacos in Chicago, inspired by the way her grandmother cooked for everyone before sunrise.</p>
+      </div>
+    </div>
+    <div class="t-row">
+      <p class="t-year mono">Since</p>
+      <div class="t-body">
+        <h3>Beyond the taco</h3>
+        <p>The menu grows to include on-site catering, personal chef service, and pop-ups at local businesses and Chicagoland farmers markets.</p>
+      </div>
+    </div>
+    <div class="t-row">
+      <p class="t-year mono">Today</p>
+      <div class="t-body">
+        <h3>Giving back</h3>
+        <p>Jessica runs youth entrepreneurship workshops in underserved Chicago communities, introducing young people to business ownership through the same drive that built Just Dip It.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="wrap">
+    <h2 class="display">Hungry yet?</h2>
+    <div class="cta-row">
+      <a href="catering.html#order-form" class="btn-primary">Order Here</a>
+      <a href="contact.html" class="btn-ghost">Book Us For An Event</a>
+    </div>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <img src="https://images.squarespace-cdn.com/content/v1/665f44860aa19e1a901311c0/5b6eb425-534a-4455-b1d2-bcae7d8407b4/Just+Dip+It+Logo.png?format=1500w" alt="Just Dip It logo">
+        <span>Just Dip It</span>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="index.html#menu">Our Menus</a>
+        <a href="about.html">About</a>
+        <a href="catering.html">Catering</a>
+      </div>
+      <div class="footer-col">
+        <h4>Find Us</h4>
+        <p>330 E 51st St Box 7 (front yellow box), Chicago, IL 60615</p>
+        <p>Wed &amp; Sat, 1&ndash;5pm</p>
+        <a href="index.html#schedule">Full schedule &amp; closures &rarr;</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <a href="https://www.instagram.com/justdipittacos/">Instagram</a>
+        <a href="https://www.facebook.com/JustDipitTacos">Facebook</a>
+        <a href="https://www.youtube.com/@JustDipitTacos">YouTube</a>
+        <a href="https://www.tiktok.com/@justdipittacos">TikTok</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Just Dip It Tacos</span>
+      <span>Chicago, IL</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
