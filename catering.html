@@ -566,7 +566,7 @@
           <input type="email" name="email" required>
         </div>
         <div class="of-field">
-          <label>Date<span class="req">*</span></label>
+          <label>Date Of Requested Event<span class="req">*</span></label>
           <input type="date" name="event_date" required>
         </div>
       </div>
@@ -588,6 +588,13 @@
           </select>
         </div>
       </div>
+      <div class="of-field" style="margin-bottom:20px;">
+        <label>When Are You Available To Discuss?<span class="req">*</span></label>
+        <select name="availability" id="availability-select" required>
+          <option value="" selected disabled>Loading available times&hellip;</option>
+        </select>
+        <p class="of-note" style="margin-top:6px;">Pick a time that works for you in the next two weeks &mdash; Jessica will confirm or suggest another time via Calendly.</p>
+      </div>
       <div class="of-field" style="margin-bottom:24px;">
         <label>Message<span class="req">*</span></label>
         <textarea name="message" required></textarea>
@@ -595,6 +602,41 @@
       <button type="submit" class="of-submit">Send</button>
       <p class="of-note">This form is a mockup only and not yet connected &mdash; convert to a Squarespace Form Block before publishing.</p>
     </form>
+    <script>
+    (function(){
+      var select = document.getElementById('availability-select');
+      if(!select) return;
+      select.innerHTML = '';
+      var placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Select a time';
+      placeholder.disabled = true;
+      placeholder.selected = true;
+      select.appendChild(placeholder);
+
+      var dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var today = new Date();
+      today.setHours(0,0,0,0);
+
+      for (var d = 0; d < 14; d++) {
+        var day = new Date(today.getFullYear(), today.getMonth(), today.getDate() + d);
+        var dayLabel = dayNames[day.getDay()] + ', ' + monthNames[day.getMonth()] + ' ' + day.getDate();
+        var group = document.createElement('optgroup');
+        group.label = dayLabel;
+        for (var h = 10; h <= 20; h++) {
+          var hour12 = h > 12 ? h - 12 : h;
+          var ampm = h >= 12 ? 'PM' : 'AM';
+          var timeLabel = hour12 + ':00 ' + ampm;
+          var opt = document.createElement('option');
+          opt.value = dayLabel + ' \u2014 ' + timeLabel;
+          opt.textContent = timeLabel;
+          group.appendChild(opt);
+        }
+        select.appendChild(group);
+      }
+    })();
+    </script>
   </div>
 </section>
 
