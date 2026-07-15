@@ -311,7 +311,11 @@
       <h2 class="display">Request A Quote</h2>
       <p>Fill this out with as much detail as you can and we'll be in touch soon.</p>
     </div>
-    <form class="of-card" onsubmit="return false;">
+    <form class="of-card" id="quote-form">
+      <input type="hidden" name="access_key" value="0e1e9146-18d9-4a46-b8d4-0fedaa280040">
+      <input type="hidden" name="subject" value="New Contact Form Submission — justdipittacos.com">
+      <input type="hidden" name="from_name" value="Just Dip It Tacos Website">
+      <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
       <div class="of-row">
         <div class="of-field">
           <label>First Name<span class="req">*</span></label>
@@ -366,7 +370,6 @@
         <textarea name="message" required></textarea>
       </div>
       <button type="submit" class="of-submit">Send</button>
-      <p class="of-note">This form is a mockup only and not yet connected &mdash; convert to a Squarespace Form Block before publishing.</p>
     </form>
     <script>
     (function(){
@@ -401,6 +404,42 @@
         }
         select.appendChild(group);
       }
+    })();
+
+    (function(){
+      var form = document.getElementById('quote-form');
+      if(!form) return;
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var btn = form.querySelector('.of-submit');
+        var originalText = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){
+          if (data.success) {
+            form.innerHTML = '<div style="text-align:center; padding:20px 0;">' +
+              '<h3 style="color:var(--marigold); font-family:\'Anton\'; font-size:1.6rem; margin-bottom:12px;">Thanks!</h3>' +
+              '<p style="color:var(--masa-dim); font-family:\'Fraunces\'; font-size:1.05rem;">Your request is in \u2014 we\'ll be in touch soon.</p>' +
+              '</div>';
+          } else {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            alert('Something went wrong sending your request. Please try again, or email jelchefe@gmail.com directly.');
+          }
+        })
+        .catch(function(){
+          btn.textContent = originalText;
+          btn.disabled = false;
+          alert('Something went wrong sending your request. Please try again, or email jelchefe@gmail.com directly.');
+        });
+      });
     })();
     </script>
   </div>
