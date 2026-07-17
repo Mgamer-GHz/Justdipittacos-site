@@ -222,6 +222,8 @@
     .of-row{grid-template-columns:1fr;}
   }
 </style>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" defer></script>
 </head>
 <body>
 
@@ -366,13 +368,6 @@
           </select>
         </div>
       </div>
-      <div class="of-field" style="margin-bottom:20px;">
-        <label>When Are You Available To Discuss?<span class="req">*</span></label>
-        <select name="availability" id="availability-select" required>
-          <option value="" selected disabled>Loading available times&hellip;</option>
-        </select>
-        <p class="of-note" style="margin-top:6px;">Pick a time that works for you in the next two weeks &mdash; Jessica will confirm or suggest another time via Calendly.</p>
-      </div>
       <div class="of-field" style="margin-bottom:24px;">
         <label>Message<span class="req">*</span></label>
         <textarea name="message" required></textarea>
@@ -380,40 +375,6 @@
       <button type="submit" class="of-submit">Send</button>
     </form>
     <script>
-    (function(){
-      var select = document.getElementById('availability-select');
-      if(!select) return;
-      select.innerHTML = '';
-      var placeholder = document.createElement('option');
-      placeholder.value = '';
-      placeholder.textContent = 'Select a time';
-      placeholder.disabled = true;
-      placeholder.selected = true;
-      select.appendChild(placeholder);
-
-      var dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-      var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      var today = new Date();
-      today.setHours(0,0,0,0);
-
-      for (var d = 0; d < 14; d++) {
-        var day = new Date(today.getFullYear(), today.getMonth(), today.getDate() + d);
-        var dayLabel = dayNames[day.getDay()] + ', ' + monthNames[day.getMonth()] + ' ' + day.getDate();
-        var group = document.createElement('optgroup');
-        group.label = dayLabel;
-        for (var h = 10; h <= 20; h++) {
-          var hour12 = h > 12 ? h - 12 : h;
-          var ampm = h >= 12 ? 'PM' : 'AM';
-          var timeLabel = hour12 + ':00 ' + ampm;
-          var opt = document.createElement('option');
-          opt.value = dayLabel + ' \u2014 ' + timeLabel;
-          opt.textContent = timeLabel;
-          group.appendChild(opt);
-        }
-        select.appendChild(group);
-      }
-    })();
-
     (function(){
       var form = document.getElementById('quote-form');
       if(!form) return;
@@ -432,10 +393,18 @@
         .then(function(res){ return res.json(); })
         .then(function(data){
           if (data.success) {
-            form.innerHTML = '<div style="text-align:center; padding:20px 0;">' +
-              '<h3 style="color:var(--marigold); font-family:\'Anton\'; font-size:1.6rem; margin-bottom:12px;">Thanks!</h3>' +
-              '<p style="color:var(--masa-dim); font-family:\'Fraunces\'; font-size:1.05rem;">Your request is in \u2014 we\'ll be in touch soon.</p>' +
+            form.innerHTML = '<div style="text-align:center; padding:10px 0 0;">' +
+              '<h3 style="color:var(--marigold); font-family:\'Anton\'; font-size:1.6rem; margin-bottom:10px;">Thanks!</h3>' +
+              '<p style="color:var(--masa-dim); font-family:\'Fraunces\'; font-size:1.02rem; margin-bottom:24px;">Your request is in. Pick a time below to chat with Jessica about your event:</p>' +
+              '<div id="calendly-embed" style="min-width:280px; height:650px;"></div>' +
+              '<p style="margin-top:16px;"><a href="https://calendly.com/justdipittacos" target="_blank" rel="noopener" style="color:var(--marigold); font-family:\'Space Mono\'; font-size:0.78rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">Open Scheduling Page In A New Tab &rarr;</a></p>' +
               '</div>';
+            if (window.Calendly) {
+              Calendly.initInlineWidget({
+                url: 'https://calendly.com/justdipittacos',
+                parentElement: document.getElementById('calendly-embed')
+              });
+            }
           } else {
             btn.textContent = originalText;
             btn.disabled = false;
