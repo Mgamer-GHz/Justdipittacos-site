@@ -422,7 +422,7 @@
           if (data.success) {
             var customerName = form.querySelector('[name="name"]') ? form.querySelector('[name="name"]').value : '';
             var customerEmail = form.querySelector('[name="email"]') ? form.querySelector('[name="email"]').value : '';
-            var calendlyUrl = 'https://calendly.com/justdipittacos?name=' + encodeURIComponent(customerName) + '&email=' + encodeURIComponent(customerEmail);
+            var calendlyUrl = 'https://calendly.com/justdipittacos/30min?name=' + encodeURIComponent(customerName) + '&email=' + encodeURIComponent(customerEmail);
             form.innerHTML = '<div style="text-align:center; padding:10px 0 0;">' +
               '<h3 style="color:var(--marigold); font-family:\'Anton\'; font-size:1.6rem; margin-bottom:10px;">Thanks!</h3>' +
               '<p style="color:var(--masa-dim); font-family:\'Fraunces\'; font-size:1.02rem; margin-bottom:24px;">Your request is in. Pick a time below to chat with Jessica about your event:</p>' +
@@ -431,7 +431,7 @@
               '</div>';
             if (window.Calendly) {
               Calendly.initInlineWidget({
-                url: 'https://calendly.com/justdipittacos',
+                url: 'https://calendly.com/justdipittacos/30min',
                 parentElement: document.getElementById('calendly-embed'),
                 prefill: {
                   name: customerName,
